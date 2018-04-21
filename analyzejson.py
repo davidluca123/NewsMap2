@@ -38,9 +38,9 @@ def values(stock_pre, stock_post, tone, value):
         return value
 
 def analyzejson():
-    with open('static/pfizer.geojson') as f:
+    with open('static/goldman.geojson') as f:
         data = json.load(f)
-    with open('static/pfizer_stock.geojson') as f:
+    with open('static/goldman2.geojson') as f:
         stocks = json.load(f)
     article = 0
     articles = []

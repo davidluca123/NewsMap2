@@ -101,6 +101,7 @@ a {
   <h2>Day: <label id='active-date'>30</label> <br> Price = <label id='active-price'>0</label></h2>
   <input id='slider' class='row' type='range' min='1' max='30' step='1' value='30'/>
 </div>
+<p>Black point = location with most influence on company stock over past month </p>
 </div>
 <body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -115,40 +116,65 @@ var map = new mapboxgl.Map({
 });
 
 map.on('load', function() {
-  map.addLayer({
-    id: 'tone',
-    type: 'circle',
-    source: {
-      type: 'geojson',
-      data: "{{url_for('static',filename = 'pfizer.geojson')}}" // replace this with the url of your own geojson
-    },
-    paint: {
 
-      'circle-color': {
-        property: 'tone',
-        stops: [
-          [-8, '#ff0000'],
-          [-7, '#ff2a00'],
-          [-6, '#ff3b00'],
-          [-5, '#ff5900'],
-          [-4, '#ff7700'],
-          [-3, '#ff9000'],
-          [-2, '#ffa500'],
-          [-1, '#fff200'],
-          [0, '#ffff00'],
-          [1, '#f6ff00'],
-          [2, '#e5ff00'],
-          [3, '#d8ff00'],
-          [4, '#ccff00'],
-          [5, '#bfff00'],
-          [6, '#a5ff00'],
-          [7, '#90ff00'],
-          [8, '#5dff00']
-        ]
-      },
-      'circle-opacity': 0.8
-    }
-  }, 'admin-2-boundaries-dispute'); // place the layer beneath this layer in the basemap
+//Adding point on newsmap
+      map.addLayer({
+        "id": "circle500",
+        "type": "circle",
+        "source": {
+        "type": "geojson",
+          "data": {
+              "type": "FeatureCollection",
+              "features": [{
+                  "type": "Feature",
+                  "geometry": {
+                      "type": "Point",
+                      "coordinates": [77.5833,12.9833]
+                  }
+              }]
+            }
+          },
+        "paint": {
+            "circle-radius": 6,
+            "circle-color": "#000000",
+        }
+    });
+
+
+map.addLayer({
+  id: 'tone',
+  type: 'circle',
+  source: {
+    type: 'geojson',
+    data: "{{url_for('static',filename = 'pfizer.geojson')}}" // replace this with the url of your own geojson
+  },
+  paint: {
+
+    'circle-color': {
+      property: 'tone',
+      stops: [
+        [-8, '#ff0000'],
+        [-7, '#ff2a00'],
+        [-6, '#ff3b00'],
+        [-5, '#ff5900'],
+        [-4, '#ff7700'],
+        [-3, '#ff9000'],
+        [-2, '#ffa500'],
+        [-1, '#fff200'],
+        [0, '#ffff00'],
+        [1, '#f6ff00'],
+        [2, '#e5ff00'],
+        [3, '#d8ff00'],
+        [4, '#ccff00'],
+        [5, '#bfff00'],
+        [6, '#a5ff00'],
+        [7, '#90ff00'],
+        [8, '#5dff00']
+      ]
+    },
+    'circle-opacity': 0.8
+  }
+}, 'admin-2-boundaries-dispute'); // place the layer beneath this layer in the basemap
 
   $.ajax({
 dataType: "json",
@@ -182,8 +208,5 @@ document.getElementById('slider').addEventListener('input', function(e) {
 
 
 </script>
-
-
-
 
 </html>

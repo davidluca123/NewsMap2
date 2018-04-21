@@ -1,10 +1,11 @@
 import os
 import csv
-import urllib.request 
+import urllib.request
 import zipfile
 import sys
 from flask import Flask, request, render_template,request,url_for
 import json
+import analyzejson
 
 global count
 count = 1
@@ -27,7 +28,7 @@ def generate_map():
 	#url_for('static', filename ="%06d"%n+".geojson")
 	temp_filename = url_for('static', filename ="%06d"%n+".geojson")
 	print(temp_filename)
-	
+
 	return render_template('generate_map.html', filename = temp_filename)
 
 @app.route("/map")
@@ -97,7 +98,7 @@ def generate_json(company, month, day, year, hour_range):
 		for minute in minute_range:
 			URLpath = "http://data.gdeltproject.org/gdeltv2/" + year + month + day + hour + minute + "00" + ".gkg.csv.zip"
 			localDestination = "Datasets/" + hour + minute + ".gkg.csv.zip"
-			
+
 			try:
 				urllib.request.urlretrieve(URLpath, localDestination)
 				zip_ref = zipfile.ZipFile(localDestination, 'r')
@@ -154,4 +155,3 @@ def generate_json(company, month, day, year, hour_range):
 
 if __name__ == '__main__':
 	app.run(debug = 1)
-

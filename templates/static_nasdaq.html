@@ -7,7 +7,7 @@
   <script src='https://api.mapbox.com/mapbox-gl-js/v0.40.0/mapbox-gl.js'></script>
   <link href='https://api.mapbox.com/mapbox-gl-js/v0.40.0/mapbox-gl.css' rel='stylesheet' />
 
-    
+
 </head>
 <style>
     body {
@@ -69,11 +69,11 @@ a {
 </style>
 
 <body>
-   
+
 	<div id='map'></div>
 	<div id='console'>
   		<h1>View of Company Around the World</h1>
-  		
+
   	<div class='session'>
   <h2>View</h2>
   <div class='row colors'>
@@ -101,6 +101,8 @@ a {
   <h2>Day: <label id='active-date'>30</label> <br> Price = <label id='active-price'>0</label></h2>
   <input id='slider' class='row' type='range' min='1' max='30' step='1' value='30'/>
 </div>
+<p>Black point = location with most influence on company stock over past month </p>
+
 </div>
 <body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -116,6 +118,28 @@ var map = new mapboxgl.Map({
 
 map.on('load', function() {
   map.addLayer({
+    "id": "circle500",
+    "type": "circle",
+    "source": {
+    "type": "geojson",
+      "data": {
+          "type": "FeatureCollection",
+          "features": [{
+              "type": "Feature",
+              "geometry": {
+                  "type": "Point",
+                  "coordinates": [-107.209,42.7475]
+              }
+          }]
+        }
+      },
+    "paint": {
+        "circle-radius": 6,
+        "circle-color": "#000000",
+    }
+  });
+
+  map.addLayer({
     id: 'tone',
     type: 'circle',
     source: {
@@ -123,7 +147,7 @@ map.on('load', function() {
       data: "{{url_for('static',filename = 'nasdaq.geojson')}}" // replace this with the url of your own geojson
     },
     paint: {
-      
+
       'circle-color': {
         property: 'tone',
         stops: [
@@ -177,7 +201,7 @@ document.getElementById('slider').addEventListener('input', function(e) {
 });
 }
 });
-  
+
 });
 
 
