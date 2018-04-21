@@ -86,6 +86,7 @@ def generate_json(company, month, day, year, hour_range):
 	latitude_array = []
 	longitude_array = []
 	tone_array = []
+	url_array = []
 
 	# Downloads each time data file, and extracts the longitude and latitude data
 	# Prints the data to a CSV file
@@ -117,11 +118,13 @@ def generate_json(company, month, day, year, hour_range):
 								latitude_array.append(item.split("#")[4])
 								longitude_array.append(item.split("#")[5])
 								tone_array.append(int(float(row.split("\t")[15].split(",")[0])))
+								url_array.append((row.split('\t')[4]))
 							for item in row.split("\t")[10].split(";"):
 								print("success")
 								latitude_array.append(item.split(",")[1].split("#")[4])
 								longitude_array.append(item.split(",")[1].split("#")[5])
 								tone_array.append(int(float(row.split("\t")[15].split(",")[0])))
+								url_array.append(print(row.split("\t")[4]))
 					except:
 						print(latitude_array)
 						x=1
@@ -136,6 +139,7 @@ def generate_json(company, month, day, year, hour_range):
 		    add_on['type'] = "Feature"
 		    add_on["properties"] = {}
 		    add_on["properties"]["tone"] = (int(tone_array[i]))
+		    add_on["properties"]['url'] = (str(url_array[i]))
 		    add_on["geometry"] = {}
 		    add_on["geometry"]["coordinates"] = []
 		    add_on["geometry"]["coordinates"].append(float(longitude_array[i]))

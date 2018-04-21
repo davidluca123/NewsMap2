@@ -118,6 +118,9 @@ map.on('load', function() {
       type: 'geojson',
       data: '{{filename}}'   // replace this with the url of your own geojson
     },
+    properties: {
+      description: 'url'
+    },
     paint: {
       
       'circle-color': {
@@ -146,7 +149,12 @@ map.on('load', function() {
     }
   }, 'admin-2-boundaries-dispute'); // place the layer beneath this layer in the basemap
 });
-
+map.on('click', 'tone', function (e) {
+        new mapboxgl.Popup()
+            .setLngLat(e.lngLat)
+            .setHTML(e.features[0].properties.url)
+            .addTo(map);
+    });
 
 </script>
 
